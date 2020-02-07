@@ -6,43 +6,31 @@
 /*------Variables (state)------*/
 
 let dice = {
-    dice1 : {
+    dice1: {
         currentRoll: 0,
-        saved: false,    
+        saved: false
     },
-    dice2 : {
-        currentRoll: 0,
-        saved: false,    
+    dice2: {
+        currentRoll: 0, 
+        saved: false,
     },
-    dice3 : {
-        currentRoll: 0,
-        saved: false,    
+    dice3: {
+        currentRoll: 0, 
+        saved: false
     },
-    dice4 : {
-        currentRoll: 0,
-        saved: false,    
+    dice4: {
+        currentRoll: 0, 
+        saved: false,
     },
-    dice5 : {
-        currentRoll: 0,
-        saved: false,    
+    dice5: {
+        currentRoll: 0, saved: false
     }
 }
 
-let players = {
-    player1 : {
-        turn: 1,
-        roundScore: null,
-        currentScore: 0,
-        money: 10,
-    },
-    player2 : {
-        turn: 1,
-        roundScore: null,
-        currentScore: 0,
-        money: 10,
-    }
-
-}
+let players = [
+    {player: 1, roundScore: null, currentScore: 0, money: 10},
+    {player: -1, roundScore: null, currentScore: 0, money: 10}
+]
 
 let currentBet;
 
@@ -52,18 +40,22 @@ let winner;
 
 /*------Cached Element References------*/
 
-let dice1 = document.getElementById("1");
-let dice2 = document.getElementById("2");
-let dice3 = document.getElementById("3");
-let dice4 = document.getElementById("4");
-let dice5 = document.getElementById("5");
-let betbtn = document.getElementById("betbtn");
-let roll = document.getElementById("roll");
-let msg = document.querySelector("h1");
-let bet = document.getElementById("bet");
+const dice1 = document.getElementById("0");
+const dice2 = document.getElementById("1");
+const dice3 = document.getElementById("2");
+const dice4 = document.getElementById("3");
+const dice5 = document.getElementById("4");
+const betbtn = document.getElementById("betbtn");
+const roll = document.getElementById("roll");
+const msg = document.querySelector("h1");
+const betElement = document.getElementById("bet");
+const currentScoreElement = document.getElementById("current-score");
+const playerOneScore = document.getElementById("player-one-score");
+const playerTwoScore = document.getElementById("player-two-score");
+const playerOneMoney = document.getElementById("player-one-money");
+const playerTwoMoney = document.getElementById("player-two-money");
 
 /*------Event Listeners------*/
-
 betbtn.addEventListener("click", placeBet);
 roll.addEventListener("click", rollDice);
 dice1.addEventListener("click", saveDice);
@@ -76,30 +68,35 @@ dice5.addEventListener("click", saveDice);
 /*------Functions------*/
 
 function init() {
-    currentBet = 0;
-    betAmount = 1;
     winner = null;
-    turn = 1
     msg.textContent = "Let's play Threes! Place bets to start the game!";
-    render();
+    newRound();
 }
 
 function newRound() {
     currentBet = 0;
     betAmount = 1;
+    turn = 1;
+
     render();
 }
 
 function placeBet() {
     if (winner !== null) init();
-    //if player 1 score === player 2 score betAmount *= 2
+    if ((players[0].roundScore === players[1].roundScore) && (players[0].roundScore !== null && players[1].roundScore !== null)) {
+        betAmount *= 2;
+    };
     currentBet += (betAmount * 2);
-    players.player1.money -= betAmount;
-    console.log(players.player1.money);
+    for (let player of players) {
+        player.money -= betAmount;
+    }
     
     render();
+ }
+    
+    
 
-}
+
 
 function rollDice() {
     if (currentBet === 0) return;
@@ -109,6 +106,7 @@ function rollDice() {
 }
 
 function saveDice() {
+    console.log("click");
 
 }
 
@@ -123,6 +121,11 @@ function render() {
     if (winner === null) {
         betbtn.textContent = "Bet";
     }
+    
+    if (players[0].money === 0 || players[1].money === 0) {
+        msg.textContent = `Sorry ?, you're out of money! Player ?${[winner]} wins the game! `
+    }
+
     //if player 1 or player 2 money === 0
     //message "sorry (player), you're out of money! (other player) wins the game!"
     bet.textContent = currentBet;
