@@ -6,24 +6,30 @@
 /*------Variables (state)------*/
 
 let dice = {
-    dice1: {
+    die1: {
+        id: 0,
         currentRoll: 0,
-        saved: false
+        saved: false,
     },
-    dice2: {
+    die2: {
+        id: 1,
         currentRoll: 0, 
         saved: false,
     },
-    dice3: {
-        currentRoll: 0, 
-        saved: false
-    },
-    dice4: {
+    die3: {
+        id: 2,
         currentRoll: 0, 
         saved: false,
     },
-    dice5: {
-        currentRoll: 0, saved: false
+    die4: {
+        id: 3,
+        currentRoll: 0, 
+        saved: false,
+    },
+    die5: {
+        id: 4,
+        currentRoll: 0, 
+        saved: false,
     }
 }
 
@@ -40,11 +46,11 @@ let winner;
 
 /*------Cached Element References------*/
 
-const dice1 = document.getElementById("0");
-const dice2 = document.getElementById("1");
-const dice3 = document.getElementById("2");
-const dice4 = document.getElementById("3");
-const dice5 = document.getElementById("4");
+const die1 = document.getElementById("0");
+const die2 = document.getElementById("1");
+const die3 = document.getElementById("2");
+const die4 = document.getElementById("3");
+const die5 = document.getElementById("4");
 const betbtn = document.getElementById("betbtn");
 const roll = document.getElementById("roll");
 const msg = document.querySelector("h1");
@@ -58,11 +64,11 @@ const playerTwoMoney = document.getElementById("player-two-money");
 /*------Event Listeners------*/
 betbtn.addEventListener("click", placeBet);
 roll.addEventListener("click", rollDice);
-dice1.addEventListener("click", saveDice);
-dice2.addEventListener("click", saveDice);
-dice3.addEventListener("click", saveDice);
-dice4.addEventListener("click", saveDice);
-dice5.addEventListener("click", saveDice);
+die1.addEventListener("click", saveDice);
+die2.addEventListener("click", saveDice);
+die3.addEventListener("click", saveDice);
+die4.addEventListener("click", saveDice);
+die5.addEventListener("click", saveDice);
 
 
 /*------Functions------*/
@@ -89,7 +95,7 @@ function placeBet() {
     currentBet += (betAmount * 2);
     for (let player of players) {
         player.money -= betAmount;
-    }
+    };
     
     render();
  }
@@ -100,18 +106,39 @@ function placeBet() {
 
 function rollDice() {
     if (currentBet === 0) return;
-
-    render();
-
+    for (let die in dice) {
+        if (dice[die]["saved"] === false) {
+        dice[die]["currentRoll"] = Math.floor(Math.random() * 5 + 1);
+        }
+        
+    }
+    renderDice();
 }
 
+ 
+
+
+
 function saveDice() {
-    console.log("click");
+    if (currentBet === 0) return;
+    if (dice.die1.currentRoll === 0) return;
+    let clickedDie = parseInt(event.target.id);
+    for (let die in dice) {
+        if (dice[die]["id"] === clickedDie) {
+            dice[die]["saved"] = true;
+        }
+    }
+    
+    renderDice();
 
 }
 
 function isGameOver() {
-    
+    //if player money ===0
+}
+
+function isRoundOver() {
+    //if savedDice === 5 (or, iterate through dice and check that all are true)
 }
 
 function render() {
@@ -131,6 +158,25 @@ function render() {
     bet.textContent = currentBet;
 
 
+}
+
+function renderDice() {
+    die1.textContent = dice.die1.currentRoll;
+    die2.textContent = dice.die2.currentRoll;
+    die3.textContent = dice.die3.currentRoll;
+    die4.textContent = dice.die4.currentRoll;
+    die5.textContent = dice.die5.currentRoll;
+    if (dice.die1.saved === true) {
+        die1.classList.add("highlight"); }
+    if (dice.die2.saved === true) {
+        die2.classList.add("highlight"); }
+    if (dice.die3.saved === true) {
+        die3.classList.add("highlight"); }
+    if (dice.die4.saved === true) {
+        die4.classList.add("highlight"); }
+    if (dice.die5.saved === true) {
+        die5.classList.add("highlight"); }
+        
 }
 
 
