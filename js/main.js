@@ -44,6 +44,10 @@ let betAmount;
 
 let winner;
 
+let currentScore;
+
+let savedValues;
+
 /*------Cached Element References------*/
 
 const die1 = document.getElementById("0");
@@ -83,8 +87,26 @@ function newRound() {
     currentBet = 0;
     betAmount = 1;
     turn = 1;
+    for (let die in dice) {
+        dice[die]["saved"] = false;
+        dice[die]["currentRoll"] = 0;
+    };
+    savedValues = [];
+    currentScore = 0;
 
     render();
+}
+
+function newTurn() {
+    turn *= -1;
+    for (let die in dice) {
+        dice[die]["saved"] = false;
+        dice[die]["currentRoll"] = 0;
+    };
+    savedValues = [];
+    currentScore = 0;
+    render();
+    //initilized when player 1's turn is finished
 }
 
 function placeBet() {
@@ -98,7 +120,7 @@ function placeBet() {
     };
     
     render();
- }
+}
     
     
 
@@ -108,11 +130,11 @@ function rollDice() {
     if (currentBet === 0) return;
     for (let die in dice) {
         if (dice[die]["saved"] === false) {
-        dice[die]["currentRoll"] = Math.floor(Math.random() * 5 + 1);
+        dice[die]["currentRoll"] = Math.floor(Math.random() * 6 + 1);
         }
         
     }
-    renderDice();
+    render();
 }
 
  
@@ -122,23 +144,72 @@ function rollDice() {
 function saveDice() {
     if (currentBet === 0) return;
     if (dice.die1.currentRoll === 0) return;
-    let clickedDie = parseInt(event.target.id);
+    savedValues = [];
     for (let die in dice) {
-        if (dice[die]["id"] === clickedDie) {
+        if (dice[die]["id"] === parseInt(event.target.id)) {
             dice[die]["saved"] = true;
+            savedValues.push(dice[die]["currentRoll"]);
         }
     }
-    
+    calculateCurrentScore();
     renderDice();
+    isTurnOver();
 
+}
+
+function calculateCurrentScore() {
+    for (let i = 0; i < savedValues.length; i++) {
+        if (savedValues[i] === 3) {
+            currentScore += 0;
+        }
+        else {
+            currentScore += savedValues[i];
+        }
+    }
+    renderScores();
+    console.log(currentScore);
+}
+
+function calculateRoundScore() {
+    return (turn === 1 ? players[0].roundScore = currentScore : players[1].roundScore = currentScore); 
+    renderScores();
 }
 
 function isGameOver() {
-    //if player money ===0
+    if (players[0].money === 0) {
+        winner = 1
+        render();
+    }
+    if (players[1].money === 0) {
+        winner = -1
+        render();
+    }
+    else {
+        return;
+    }
 }
 
-function isRoundOver() {
-    //if savedDice === 5 (or, iterate through dice and check that all are true)
+function isTurnOver() {
+    savedDice = 0
+    for (let die in dice) {
+        if (dice[die]["saved"] === true) {
+            savedDice += 1;
+        }
+    }
+    if (savedDice === 5) {
+        calculateRoundScore();
+        checkRoundWinner();
+        newTurn();
+    }
+}
+
+function checkRoundWinner() {
+    if (players[0].roundScore > players[1].roundScore) {
+        players[0].money += currentBet;
+    }
+    else {
+        players[1].money += currentBet;
+    }
 }
 
 function render() {
@@ -148,16 +219,16 @@ function render() {
     if (winner === null) {
         betbtn.textContent = "Bet";
     }
-    
-    if (players[0].money === 0 || players[1].money === 0) {
-        msg.textContent = `Sorry ?, you're out of money! Player ?${[winner]} wins the game! `
-    }
-
-    //if player 1 or player 2 money === 0
-    //message "sorry (player), you're out of money! (other player) wins the game!"
     bet.textContent = currentBet;
+    renderScores();
+    renderMessage();
+    renderDice();
+}
 
-
+function renderMessage() {
+    if (winner !== null) {
+        return (winner === 1 ? msg.textContent = "Sorry Player 2, you're out of money! Player 1 wins the game!" : msg.textContent = "Sorry Player 1, you're out of money! Players 2 wins the game!");
+    }
 }
 
 function renderDice() {
@@ -166,17 +237,44 @@ function renderDice() {
     die3.textContent = dice.die3.currentRoll;
     die4.textContent = dice.die4.currentRoll;
     die5.textContent = dice.die5.currentRoll;
+   //is it possible to turn this into a for... in loop or multiple ternary statements?
+   //any way to clean it up and make it less redundant
     if (dice.die1.saved === true) {
         die1.classList.add("highlight"); }
+    else {
+        die1.classList.remove("highlight");
+    }
     if (dice.die2.saved === true) {
         die2.classList.add("highlight"); }
+    else {
+        die2.classList.remove("highlight");
+    }
     if (dice.die3.saved === true) {
         die3.classList.add("highlight"); }
+    else {
+        die3.classList.remove("highlight");
+    }
+   
     if (dice.die4.saved === true) {
         die4.classList.add("highlight"); }
+    else {
+        die4.classList.remove("highlight");
+    }
     if (dice.die5.saved === true) {
         die5.classList.add("highlight"); }
+    else {
+        die5.classList.remove("highlight");
+    }
         
+}
+
+function renderScores() {
+    currentScoreElement.textContent = currentScore;
+    playerOneScore.textContent = players[0].roundScore;
+    playerTwoScore.textContent = players[1].roundScore;
+    playerOneMoney.textContent = players[0].money;
+    playerTwoMoney.textContent = players[1].money;
+
 }
 
 
