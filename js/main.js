@@ -44,9 +44,14 @@ let betAmount;
 
 let winner;
 
+let roundWinner;
+
 let currentScore;
 
 let savedValues;
+
+let previousBet;
+
 
 /*------Cached Element References------*/
 
@@ -83,9 +88,7 @@ function init() {
     newRound();
 }
 
-function newRound() {
-    currentBet = 0;
-    betAmount = 1;
+function clearScores() {
     turn = 1;
     for (let die in dice) {
         dice[die]["saved"] = false;
@@ -93,27 +96,37 @@ function newRound() {
     };
     savedValues = [];
     currentScore = 0;
+    if (isTieGame()) {
+        players[0].roundScore = null;
+        players[1].roundScore = null;
+        renderDice();
+        renderScores();
+    }
+
+}
+
+function newRound() {
+    clearScores();
+    roundWinner = 0;
+    currentBet = 0;
+    betAmount = 1;
+    turn = 1;
+    players[0].roundScore = null;
+    players[1].roundScore = null;
 
     render();
 }
 
 function newTurn() {
+    clearScores();
     turn *= -1;
-    for (let die in dice) {
-        dice[die]["saved"] = false;
-        dice[die]["currentRoll"] = 0;
-    };
-    savedValues = [];
-    currentScore = 0;
     render();
     //initilized when player 1's turn is finished
 }
 
 function placeBet() {
     if (winner !== null) init();
-    if ((players[0].roundScore === players[1].roundScore) && (players[0].roundScore !== null && players[1].roundScore !== null)) {
-        betAmount *= 2;
-    };
+    previousBet = currentBet;
     currentBet += (betAmount * 2);
     for (let player of players) {
         player.money -= betAmount;
@@ -122,12 +135,9 @@ function placeBet() {
     render();
 }
     
-    
-
-
 
 function rollDice() {
-    if (currentBet === 0) return;
+    if (currentBet !== previousBet + (betAmount * 2)) return;
     for (let die in dice) {
         if (dice[die]["saved"] === false) {
         dice[die]["currentRoll"] = Math.floor(Math.random() * 6 + 1);
@@ -167,21 +177,19 @@ function calculateCurrentScore() {
         }
     }
     renderScores();
-    console.log(currentScore);
 }
 
 function calculateRoundScore() {
     return (turn === 1 ? players[0].roundScore = currentScore : players[1].roundScore = currentScore); 
-    renderScores();
 }
 
 function isGameOver() {
     if (players[0].money === 0) {
-        winner = 1
+        winner = -1
         render();
     }
     if (players[1].money === 0) {
-        winner = -1
+        winner = 1
         render();
     }
     else {
@@ -198,18 +206,53 @@ function isTurnOver() {
     }
     if (savedDice === 5) {
         calculateRoundScore();
+        render();
+        isRoundOver();
+    }
+}
+
+function isRoundOver() {
+    if (players[0].roundScore !== null && players[1].roundScore !== null) {
+        if (isTieGame()) {
+            tieGame();
+        }
+        else {
+        render();
         checkRoundWinner();
+        isGameOver();
+        newRound();
+        }
+    }
+    else {
         newTurn();
     }
 }
 
+function isTieGame() {
+    if ((players[0].roundScore === players[1].roundScore) && (players[0].roundScore !== null && players[1].roundScore !== null)) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+function tieGame() {
+        betAmount *= 2;
+        renderMessage();
+        clearScores();
+}
+
 function checkRoundWinner() {
-    if (players[0].roundScore > players[1].roundScore) {
+    if (players[0].roundScore < players[1].roundScore) {
         players[0].money += currentBet;
+        roundWinner = 1;
     }
     else {
         players[1].money += currentBet;
+        roundWinner = -1;
     }
+    renderRoundWinMessage();
 }
 
 function render() {
@@ -219,7 +262,6 @@ function render() {
     if (winner === null) {
         betbtn.textContent = "Bet";
     }
-    bet.textContent = currentBet;
     renderScores();
     renderMessage();
     renderDice();
@@ -227,9 +269,27 @@ function render() {
 
 function renderMessage() {
     if (winner !== null) {
-        return (winner === 1 ? msg.textContent = "Sorry Player 2, you're out of money! Player 1 wins the game!" : msg.textContent = "Sorry Player 1, you're out of money! Players 2 wins the game!");
+        return (winner === 1 ? msg.textContent = "Sorry Player 2, you're out of money! Player 1 wins the game!" : msg.textContent = "Sorry Player 1, you're out of money! Player 2 wins the game!");
+    }
+
+    else if (isTieGame()) {
+        msg.textContent = "Tie Scores! Try again, but double your bets! Winner of the round takes it all!";
+    }
+
+    else if (currentBet !== 0) {
+        return (turn === 1 ? msg.textContent = "Player 1, roll the dice!" : msg.textContent = "Player 2, roll the dice!");
+    }
+    else {
+        return;
     }
 }
+
+function renderRoundWinMessage() {
+    if (roundWinner !== 0) {
+        return (roundWinner === 1 ? msg.textContent = `Player 1 wins this round! You win $${currentBet}!` : msg.textContent = `Player 2 wins this round! You win $${currentBet}!`);
+        }  
+}
+
 
 function renderDice() {
     die1.textContent = dice.die1.currentRoll;
@@ -269,6 +329,7 @@ function renderDice() {
 }
 
 function renderScores() {
+    bet.textContent = currentBet;
     currentScoreElement.textContent = currentScore;
     playerOneScore.textContent = players[0].roundScore;
     playerTwoScore.textContent = players[1].roundScore;
