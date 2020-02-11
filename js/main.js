@@ -56,6 +56,8 @@ let hasPlacedBet;
 
 let hasSavedDice;
 
+let previousWinner;
+
 
 /*------Cached Element References------*/
 
@@ -94,11 +96,11 @@ function init() {
     msg.textContent = "Let's play Threes! Place bets to start the game!";
     players[0].money = 10;
     players[1].money = 10;
+    previousWinner = 1;
     newRound();
 }
 
 function clearScores() {
-    turn = 1;
     for (let die in dice) {
         dice[die]["saved"] = false;
         dice[die]["currentRoll"] = 0;
@@ -110,6 +112,7 @@ function clearScores() {
         players[0].roundScore = null;
         players[1].roundScore = null;
         hasPlacedBet = false;
+        turn *= -1
         renderDice();
         renderScores();
     }
@@ -123,7 +126,7 @@ function newRound() {
     roundWinner = 0;
     currentBet = 0;
     betAmount = 1;
-    turn = 1;
+    turn = previousWinner;
     players[0].roundScore = null;
     players[1].roundScore = null;
     render();
@@ -271,10 +274,12 @@ function checkRoundWinner() {
     if (players[0].roundScore < players[1].roundScore) {
         players[0].money += currentBet;
         roundWinner = 1;
+        previousWinner = 1;
     }
     else {
         players[1].money += currentBet;
         roundWinner = -1;
+        previousWinner = -1;
     }
     renderRoundWinMessage();
 }
