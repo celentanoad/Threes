@@ -107,6 +107,7 @@ function clearScores() {
     if (isTieGame()) {
         players[0].roundScore = null;
         players[1].roundScore = null;
+        hasPlacedBet = false;
         renderDice();
         renderScores();
     }

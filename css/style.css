@@ -7,36 +7,14 @@ body {
 
 h1 {
     text-shadow: rgb(70, 52, 29) 2px 1px;
+    text-align: center;
 }
 
-main {
-    display: flex; 
-    justify-content: center; 
-    align-items: center;
-    flex-direction: row; 
-}
-
-section {
-    flex-direction: row;
-}
-
-.player-one {
+.bet {
     display: flex;
-    justify-content: left;
-    align-items: left;
-    flex-direction: column;
-    outline: 1px solid rgb(131, 26, 26);
-    width: 200px;
+    justify-content: center;
+    margin-bottom: 20px;
 }
-
-.player-two {
-    display: flex;
-    justify-content: right;
-    align-items: right;
-    flex-direction: column;
-    width: 200px;
-}
-
 
 
 #bet {
@@ -46,35 +24,98 @@ section {
     height: 50px;
     width: 50px;
     line-height: 50px;
+    justify-content: center;
 }
 
-.dice {
-    height: 80px;
+#dice {
+    display: flex;
+    justify-content: center;
+    
+}
+
+#current-score {
+    margin-left: 50px;
+    font-size: 30px;
+    border: dotted 3px teal;
     width: 80px;
-    border: 2px solid rgb(70, 52, 29);
-    font-size: 80px;
     text-align: center;
-    line-height: 80px;
+    line-height: 70px;
+}
+
+
+.dice {
+    margin: 0px 10px;
+    height: 70px;
+    width: 70px;
+    border: 2px solid rgb(70, 52, 29);
+    font-size: 100px;
+    text-align: center;
+    line-height: 41px;
     color: white;
     background-color: rgb(131, 26, 26);
 }
 
 .dice:hover {
     outline: 3px solid rgb(70, 52, 29);
-    font-size: 85px;
+    font-size: 110px;
     cursor: default;
 }
 
 .highlight {
     outline: 3px solid rgb(70, 52, 29);
-    font-size: 85px;
+    font-size: 110px;
 }
 
+.buttons {
+    display: flex;
+    margin-top: 20px;
+    justify-content: center;
+    margin-top: 40px;
+}
 
+#roll {
+    margin-right: 30px;
+}
+
+#betbtn {
+    margin-left: 30px;
+}
 
 button {
     height: 40px;
     width: 60px;
     outline: 4px solid rgb(135, 105, 66);
-    margin: 10px;
+}
+
+.scores {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    margin: 50px;
+    font-size: 20px;
+}
+
+.player-one {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    outline: 1px solid rgb(131, 26, 26);
+    width: 200px;
+    margin-left: 30px;
+    padding-left: 20px;
+}
+
+.money {
+    display: flex;
+    flex-direction: row;
+}
+
+.player-two {
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    width: 200px;
+    outline: 1px solid rgb(131, 26, 26);
+    margin-right: 30px;
+    padding-left: 20px;
 }
