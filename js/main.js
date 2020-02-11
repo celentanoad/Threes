@@ -92,6 +92,8 @@ diceElements.die5.addEventListener("click", saveDice);
 function init() {
     winner = null;
     msg.textContent = "Let's play Threes! Place bets to start the game!";
+    players[0].money = 10;
+    players[1].money = 10;
     newRound();
 }
 
@@ -136,7 +138,10 @@ function newTurn() {
 
 function placeBet() {
     if (hasPlacedBet === true) return;
-    if (winner !== null) init();
+    if (winner !== null) { 
+        init();
+        return;
+    }
     previousBet = currentBet;
     hasPlacedBet = true;
     currentBet += (betAmount * 2);
@@ -356,7 +361,7 @@ function renderDice() {
 }
 
 function renderScores() {
-    bet.textContent = currentBet;
+    bet.textContent = `$${currentBet}`;
     currentScoreElement.textContent = currentScore;
     playerOneScore.textContent = players[0].roundScore;
     playerTwoScore.textContent = players[1].roundScore;
