@@ -1,24 +1,73 @@
-#bets {
-    color: aqua;
+body {
+    background: url("../imgs/retina_wood.png");
+    font-family: 'Gloria Hallelujah', cursive;
+    color: teal;
+    text-shadow: rgb(70, 52, 29) 1px .5px;
+}
+
+h1 {
+    text-shadow: rgb(70, 52, 29) 2px 1px;
+}
+
+main {
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    flex-direction: row; 
+}
+
+section {
+    flex-direction: row;
+}
+
+.player-one {
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    flex-direction: column;
+    outline: 1px solid rgb(131, 26, 26);
+    width: 200px;
+}
+
+.player-two {
+    display: flex;
+    justify-content: right;
+    align-items: right;
+    flex-direction: column;
+    width: 200px;
+}
+
+
+
+#bet {
+    border: 5px solid rgb(70, 52, 29);
+    border-radius: 50%;
+    text-align: center;
+    height: 50px;
+    width: 50px;
+    line-height: 50px;
 }
 
 .dice {
-    height: 50px;
-    width: 50px;
+    height: 80px;
+    width: 80px;
     border: 2px solid rgb(70, 52, 29);
     font-size: 80px;
     text-align: center;
-    line-height: 43px;
+    line-height: 80px;
     color: white;
     background-color: rgb(131, 26, 26);
 }
 
 .dice:hover {
-    outline: 2px solid rgb(70, 52, 29);
+    outline: 3px solid rgb(70, 52, 29);
+    font-size: 85px;
+    cursor: default;
 }
 
 .highlight {
-    outline: 2px solid rgb(70, 52, 29);
+    outline: 3px solid rgb(70, 52, 29);
+    font-size: 85px;
 }
 
 

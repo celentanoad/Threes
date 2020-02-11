@@ -52,6 +52,10 @@ let savedValues;
 
 let previousBet;
 
+let hasPlacedBet;
+
+let hasSavedDice;
+
 
 /*------Cached Element References------*/
 
@@ -97,6 +101,7 @@ function clearScores() {
         dice[die]["saved"] = false;
         dice[die]["currentRoll"] = 0;
     };
+    hasSavedDice = true;
     savedValues = [];
     currentScore = 0;
     if (isTieGame()) {
@@ -110,6 +115,8 @@ function clearScores() {
 
 function newRound() {
     clearScores();
+    hasSavedDice = true;
+    hasPlacedBet = false;
     roundWinner = 0;
     currentBet = 0;
     betAmount = 1;
@@ -127,8 +134,10 @@ function newTurn() {
 }
 
 function placeBet() {
+    if (hasPlacedBet === true) return;
     if (winner !== null) init();
     previousBet = currentBet;
+    hasPlacedBet = true;
     currentBet += (betAmount * 2);
     for (let player of players) {
         player.money -= betAmount;
@@ -140,6 +149,11 @@ function placeBet() {
 
 function rollDice() {
     if (currentBet !== previousBet + (betAmount * 2)) return;
+    if (hasSavedDice === false) {
+        msg.textContent = "You must save at least one die!";
+        return;
+    }
+    hasSavedDice = false;
     for (let die in dice) {
         if (dice[die]["saved"] === false) {
         dice[die]["currentRoll"] = Math.floor(Math.random() * 6 + 1);
@@ -156,6 +170,7 @@ function rollDice() {
 function saveDice() {
     if (currentBet === 0) return;
     if (dice.die1.currentRoll === 0) return;
+    hasSavedDice = true;
     savedValues = [];
     for (let die in dice) {
         if (dice[die]["id"] === parseInt(event.target.id)) {
