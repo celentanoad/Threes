@@ -1,5 +1,3 @@
-
-
 #bets {
     color: aqua;
 }
@@ -7,17 +5,27 @@
 .dice {
     height: 50px;
     width: 50px;
-    border: 2px solid black;
-
-    
+    border: 2px solid rgb(70, 52, 29);
+    font-size: 80px;
+    text-align: center;
+    line-height: 43px;
+    color: white;
+    background-color: rgb(131, 26, 26);
 }
+
 .dice:hover {
-    outline: 2px solid cyan;
+    outline: 2px solid rgb(70, 52, 29);
 }
 
 .highlight {
-    outline: 2px solid cyan;
+    outline: 2px solid rgb(70, 52, 29);
 }
 
 
 
+button {
+    height: 40px;
+    width: 60px;
+    outline: 4px solid rgb(135, 105, 66);
+    margin: 10px;
+}

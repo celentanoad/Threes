@@ -1,5 +1,5 @@
 /*------Constants------*/
-
+const dieValues = ["&#9856","&#9857","&#9858","&#9859","&#9860","&#9861"];
 
 
 
@@ -55,11 +55,14 @@ let previousBet;
 
 /*------Cached Element References------*/
 
-const die1 = document.getElementById("0");
-const die2 = document.getElementById("1");
-const die3 = document.getElementById("2");
-const die4 = document.getElementById("3");
-const die5 = document.getElementById("4");
+const diceElements = {
+    die1: document.getElementById("0"),
+    die2: document.getElementById("1"),
+    die3: document.getElementById("2"),
+    die4: document.getElementById("3"),
+    die5:document.getElementById("4")
+};
+
 const betbtn = document.getElementById("betbtn");
 const roll = document.getElementById("roll");
 const msg = document.querySelector("h1");
@@ -73,11 +76,11 @@ const playerTwoMoney = document.getElementById("player-two-money");
 /*------Event Listeners------*/
 betbtn.addEventListener("click", placeBet);
 roll.addEventListener("click", rollDice);
-die1.addEventListener("click", saveDice);
-die2.addEventListener("click", saveDice);
-die3.addEventListener("click", saveDice);
-die4.addEventListener("click", saveDice);
-die5.addEventListener("click", saveDice);
+diceElements.die1.addEventListener("click", saveDice);
+diceElements.die2.addEventListener("click", saveDice);
+diceElements.die3.addEventListener("click", saveDice);
+diceElements.die4.addEventListener("click", saveDice);
+diceElements.die5.addEventListener("click", saveDice);
 
 
 /*------Functions------*/
@@ -113,7 +116,6 @@ function newRound() {
     turn = 1;
     players[0].roundScore = null;
     players[1].roundScore = null;
-
     render();
 }
 
@@ -157,6 +159,7 @@ function saveDice() {
     savedValues = [];
     for (let die in dice) {
         if (dice[die]["id"] === parseInt(event.target.id)) {
+            if (dice[die]["saved"] === true) return;
             dice[die]["saved"] = true;
             savedValues.push(dice[die]["currentRoll"]);
         }
@@ -292,38 +295,46 @@ function renderRoundWinMessage() {
 
 
 function renderDice() {
-    die1.textContent = dice.die1.currentRoll;
-    die2.textContent = dice.die2.currentRoll;
-    die3.textContent = dice.die3.currentRoll;
-    die4.textContent = dice.die4.currentRoll;
-    die5.textContent = dice.die5.currentRoll;
+    if (dice.die1.currentRoll !== 0) {
+        diceElements.die1.innerHTML = dieValues[dice.die1.currentRoll - 1];
+        diceElements.die2.innerHTML = dieValues[dice.die2.currentRoll -1];
+        diceElements.die3.innerHTML = dieValues[dice.die3.currentRoll -1];
+        diceElements.die4.innerHTML = dieValues[dice.die4.currentRoll -1];
+        diceElements.die5.innerHTML = dieValues[dice.die5.currentRoll -1];
+    }
+    else {
+        for (let die in diceElements) {
+            diceElements[die].innerHTML = "";
+        }
+    }
+
    //is it possible to turn this into a for... in loop or multiple ternary statements?
    //any way to clean it up and make it less redundant
     if (dice.die1.saved === true) {
-        die1.classList.add("highlight"); }
+        diceElements.die1.classList.add("highlight"); }
     else {
-        die1.classList.remove("highlight");
+        diceElements.die1.classList.remove("highlight");
     }
     if (dice.die2.saved === true) {
-        die2.classList.add("highlight"); }
+        diceElements.die2.classList.add("highlight"); }
     else {
-        die2.classList.remove("highlight");
+        diceElements.die2.classList.remove("highlight");
     }
     if (dice.die3.saved === true) {
-        die3.classList.add("highlight"); }
+        diceElements.die3.classList.add("highlight"); }
     else {
-        die3.classList.remove("highlight");
+        diceElements.die3.classList.remove("highlight");
     }
    
     if (dice.die4.saved === true) {
-        die4.classList.add("highlight"); }
+        diceElements.die4.classList.add("highlight"); }
     else {
-        die4.classList.remove("highlight");
+        diceElements.die4.classList.remove("highlight");
     }
     if (dice.die5.saved === true) {
-        die5.classList.add("highlight"); }
+        diceElements.die5.classList.add("highlight"); }
     else {
-        die5.classList.remove("highlight");
+        diceElements.die5.classList.remove("highlight");
     }
         
 }
