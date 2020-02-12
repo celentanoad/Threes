@@ -3,6 +3,15 @@ Threes is a simple gambling dice game where the goal is to get the lowest score 
 
 ## Screenshots
 
+![Wireframe](https://i.imgur.com/Mj59Qjk.png)
+
+![Screenshot1](https://i.imgur.com/pO4Baxy.png)
+
+![Screenshot2](https://i.imgur.com/gX8GVKI.png)
+
+
+
+
 ## Technologies Used
 - Javascript
 - HTML
@@ -10,13 +19,21 @@ Threes is a simple gambling dice game where the goal is to get the lowest score 
 
 ## Getting Started
 #### Instructions:
-Start the game by clicking the "bet" button (bets will automatically be placed for each player). Each player will take their turn by rolling the dice, and choosing at least one die to "save". The total of all the saved dice will represent the current score, and once all the dice are saved, the next player will take their turn and attempt to beat the previous score.  If players' scores are tied, bets are doubled and the round starts again! The game is officially over when one player runs out of money. Click the link below to play!
+- Place your bets
+- Roll the dice
+- Choose at least one die to "save" (Saved dice will not roll again)
+- Threes are worth zero points! Everything else is face value.
+- Once all 5 dice are saved, the score is totalled and the next player takes their turn
+- If a tie occurs, bets are doubled and the round starts again!
+- The game is officially over when one player runs out of money
+  
+Click the link below to play!
 
 https://celentanoad.github.io/Threes/
 
 
 
-### Future Improvements
+## Future Improvements
 - Message displays score to beat on 2nd turn
 - Option to unsave dice before rolling again (maybe like an undo button?)
 - Add sounds
@@ -26,3 +43,9 @@ https://celentanoad.github.io/Threes/
   
 
 Background Image by Atle Mo: https://www.toptal.com/designers/subtlepatterns/retina-wood/
+
+Sounds:
+http://soundbible.com/182-Shake-And-Roll-Dice.html
+https://freesound.org/people/jobro/sounds/180894/ Jobro
+https://freesound.org/people/SpaceJoe/sounds/485717/ SpaceJoe
+https://www.myinstants.com/instant/windows-31-startup-tada/

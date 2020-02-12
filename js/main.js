@@ -1,6 +1,10 @@
 /*------Constants------*/
 const dieValues = ["&#9856","&#9857","&#9858","&#9859","&#9860","&#9861"];
 
+const diceRoll = new Audio("/audio/roll1.mp3");
+const betSound = new Audio("/audio/coin-drop.wav");
+const roundWinSound = new Audio("/audio/cash-register.wav");
+const gameWinSound = new Audio("audio/win31.mp3");
 
 
 /*------Variables (state)------*/
@@ -58,6 +62,8 @@ let hasSavedDice;
 
 let previousWinner;
 
+let rolledDice;
+
 
 /*------Cached Element References------*/
 
@@ -110,6 +116,7 @@ function clearScores() {
     hasSavedDice = true;
     savedValues = [];
     currentScore = 0;
+    rolledDice = 0;
     if (isTieGame()) {
         players[0].roundScore = null;
         players[1].roundScore = null;
@@ -146,6 +153,7 @@ function placeBet() {
         init();
         return;
     }
+    betSound.play();
     previousBet = currentBet;
     hasPlacedBet = true;
     currentBet += (betAmount * 2);
@@ -162,10 +170,12 @@ function rollDice() {
         msg.textContent = "You must save at least one die!";
         return;
     }
+    diceRoll.play();
     hasSavedDice = false;
     for (let die in dice) {
         if (dice[die]["saved"] === false) {
-        dice[die]["currentRoll"] = Math.floor(Math.random() * 6 + 1);
+            dice[die]["currentRoll"] = Math.floor(Math.random() * 6 + 1);
+            rolledDice += 1;
         }
     }
     render();
@@ -208,13 +218,16 @@ function calculateRoundScore() {
 function isGameOver() {
     if (players[0].money === 0) {
         winner = -1
+        gameWinSound.play();
         render();
     }
     if (players[1].money === 0) {
         winner = 1
+        gameWinSound.play();
         render();
     }
     else {
+        roundWinSound.play();
         return;
     }
 }
