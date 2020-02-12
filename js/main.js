@@ -62,8 +62,6 @@ let hasSavedDice;
 
 let previousWinner;
 
-let rolledDice;
-
 
 /*------Cached Element References------*/
 
@@ -116,7 +114,6 @@ function clearScores() {
     hasSavedDice = true;
     savedValues = [];
     currentScore = 0;
-    rolledDice = 0;
     if (isTieGame()) {
         players[0].roundScore = null;
         players[1].roundScore = null;
@@ -175,7 +172,6 @@ function rollDice() {
     for (let die in dice) {
         if (dice[die]["saved"] === false) {
             dice[die]["currentRoll"] = Math.floor(Math.random() * 6 + 1);
-            rolledDice += 1;
         }
     }
     render();
