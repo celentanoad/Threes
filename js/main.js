@@ -69,6 +69,7 @@ const diceElements = {
     die5:document.getElementById("4")
 };
 
+
 const betbtn = document.getElementById("betbtn");
 const roll = document.getElementById("roll");
 const msg = document.querySelector("h1");
@@ -80,6 +81,7 @@ const playerOneMoney = document.getElementById("player-one-money");
 const playerTwoMoney = document.getElementById("player-two-money");
 
 /*------Event Listeners------*/
+
 betbtn.addEventListener("click", placeBet);
 roll.addEventListener("click", rollDice);
 diceElements.die1.addEventListener("click", saveDice);
@@ -116,7 +118,6 @@ function clearScores() {
         renderDice();
         renderScores();
     }
-
 }
 
 function newRound() {
@@ -136,7 +137,7 @@ function newTurn() {
     clearScores();
     turn *= -1;
     render();
-    //initilized when player 1's turn is finished
+    //initilized when first turn in round is finished
 }
 
 function placeBet() {
@@ -150,8 +151,7 @@ function placeBet() {
     currentBet += (betAmount * 2);
     for (let player of players) {
         player.money -= betAmount;
-    };
-    
+    }
     render();
 }
     
@@ -167,31 +167,26 @@ function rollDice() {
         if (dice[die]["saved"] === false) {
         dice[die]["currentRoll"] = Math.floor(Math.random() * 6 + 1);
         }
-        
     }
     render();
 }
 
  
-
-
-
 function saveDice() {
     if (currentBet === 0) return;
     if (dice.die1.currentRoll === 0) return;
-    hasSavedDice = true;
     savedValues = [];
     for (let die in dice) {
         if (dice[die]["id"] === parseInt(event.target.id)) {
             if (dice[die]["saved"] === true) return;
             dice[die]["saved"] = true;
+            hasSavedDice = true;
             savedValues.push(dice[die]["currentRoll"]);
         }
     }
     calculateCurrentScore();
     renderDice();
     isTurnOver();
-
 }
 
 function calculateCurrentScore() {

@@ -95,6 +95,11 @@ button {
     font-size: 20px;
 }
 
+.player-scores {
+    display: flex;
+    flex-direction: row;
+}
+
 .player-one {
     display: flex;
     flex-direction: column;
@@ -118,4 +123,12 @@ button {
     outline: 1px solid rgb(131, 26, 26);
     margin-right: 30px;
     padding-left: 20px;
+}
+
+#player-one-score {
+    padding-left: 10px;
+}
+
+#player-two-score {
+    padding-left: 10px;
 }
