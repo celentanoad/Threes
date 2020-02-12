@@ -4,7 +4,7 @@ const dieValues = ["&#9856","&#9857","&#9858","&#9859","&#9860","&#9861"];
 const diceRoll = new Audio("/audio/roll1.mp3");
 const betSound = new Audio("/audio/coin-drop.wav");
 const roundWinSound = new Audio("/audio/cash-register.wav");
-const gameWinSound = new Audio("audio/win31.mp3");
+const gameWinSound = new Audio("/audio/win31.mp3");
 
 
 /*------Variables (state)------*/
@@ -64,8 +64,6 @@ let previousWinner;
 
 let rolledDice;
 
-audio.muted = false;
-
 
 /*------Cached Element References------*/
 
@@ -87,7 +85,6 @@ const playerOneScore = document.getElementById("player-one-score");
 const playerTwoScore = document.getElementById("player-two-score");
 const playerOneMoney = document.getElementById("player-one-money");
 const playerTwoMoney = document.getElementById("player-two-money");
-const audio = document.getElementById("audio");
 
 /*------Event Listeners------*/
 
@@ -333,7 +330,7 @@ function renderRoundWinMessage() {
 
 function renderDice() {
     if (dice.die1.currentRoll !== 0) {
-        diceElements.die1.innerHTML = dieValues[dice.die1.currentRoll - 1];
+        diceElements.die1.innerHTML = dieValues[dice.die1.currentRoll -1];
         diceElements.die2.innerHTML = dieValues[dice.die2.currentRoll -1];
         diceElements.die3.innerHTML = dieValues[dice.die3.currentRoll -1];
         diceElements.die4.innerHTML = dieValues[dice.die4.currentRoll -1];
