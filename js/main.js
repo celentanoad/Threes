@@ -64,6 +64,8 @@ let previousWinner;
 
 let rolledDice;
 
+audio.muted = false;
+
 
 /*------Cached Element References------*/
 
@@ -85,6 +87,7 @@ const playerOneScore = document.getElementById("player-one-score");
 const playerTwoScore = document.getElementById("player-two-score");
 const playerOneMoney = document.getElementById("player-one-money");
 const playerTwoMoney = document.getElementById("player-two-money");
+const audio = document.getElementById("audio");
 
 /*------Event Listeners------*/
 
