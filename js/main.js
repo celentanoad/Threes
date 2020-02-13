@@ -337,8 +337,6 @@ function renderDice() {
             diceElements[die].innerHTML = "";
         }
     }
-   //is it possible to turn this into a for... in loop or multiple ternary statements?
-   //any way to clean it up and make it less redundant
     if (dice.die1.saved === true) {
         diceElements.die1.classList.add("highlight"); }
     else {
@@ -376,7 +374,5 @@ function renderScores() {
     playerOneMoney.textContent = players[0].money;
     playerTwoMoney.textContent = players[1].money;
 }
-
-
 
 init();
