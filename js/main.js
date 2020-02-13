@@ -70,7 +70,7 @@ const diceElements = {
     die2: document.getElementById("1"),
     die3: document.getElementById("2"),
     die4: document.getElementById("3"),
-    die5:document.getElementById("4")
+    die5: document.getElementById("4")
 };
 
 
@@ -138,10 +138,10 @@ function newRound() {
 }
 
 function newTurn() {
+    //initilized when first turn in round is finished
     clearScores();
     turn *= -1;
     render();
-    //initilized when first turn in round is finished
 }
 
 function placeBet() {
@@ -181,7 +181,7 @@ function rollDice() {
 function saveDice() {
     if (currentBet === 0) return;
     if (dice.die1.currentRoll === 0) return;
-    savedValues = [];
+    savedValues = []
     for (let die in dice) {
         if (dice[die]["id"] === parseInt(event.target.id)) {
             if (dice[die]["saved"] === true) return;
@@ -337,7 +337,6 @@ function renderDice() {
             diceElements[die].innerHTML = "";
         }
     }
-
    //is it possible to turn this into a for... in loop or multiple ternary statements?
    //any way to clean it up and make it less redundant
     if (dice.die1.saved === true) {
@@ -362,11 +361,11 @@ function renderDice() {
         diceElements.die4.classList.remove("highlight");
     }
     if (dice.die5.saved === true) {
-        diceElements.die5.classList.add("highlight"); }
+        diceElements.die5.classList.add("highlight"); 
+    }
     else {
         diceElements.die5.classList.remove("highlight");
-    }
-        
+    }  
 }
 
 function renderScores() {
@@ -376,7 +375,6 @@ function renderScores() {
     playerTwoScore.textContent = players[1].roundScore;
     playerOneMoney.textContent = players[0].money;
     playerTwoMoney.textContent = players[1].money;
-
 }
 
 
