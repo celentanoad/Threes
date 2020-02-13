@@ -1,6 +1,5 @@
 /*------Constants------*/
 const dieValues = ["&#9856","&#9857","&#9858","&#9859","&#9860","&#9861"];
-
 const diceRoll = new Audio("/audio/roll1.mp3");
 const betSound = new Audio("/audio/coin-drop.wav");
 const roundWinSound = new Audio("/audio/cash-register.wav");
@@ -62,7 +61,6 @@ let hasSavedDice;
 
 let previousWinner;
 
-
 /*------Cached Element References------*/
 
 const diceElements = {
@@ -72,7 +70,6 @@ const diceElements = {
     die4: document.getElementById("3"),
     die5: document.getElementById("4")
 };
-
 
 const betbtn = document.getElementById("betbtn");
 const roll = document.getElementById("roll");
@@ -93,7 +90,6 @@ diceElements.die2.addEventListener("click", saveDice);
 diceElements.die3.addEventListener("click", saveDice);
 diceElements.die4.addEventListener("click", saveDice);
 diceElements.die5.addEventListener("click", saveDice);
-
 
 /*------Functions------*/
 
@@ -158,8 +154,7 @@ function placeBet() {
         player.money -= betAmount;
     }
     render();
-}
-    
+}   
 
 function rollDice() {
     if (currentBet !== previousBet + (betAmount * 2)) return;
@@ -177,7 +172,6 @@ function rollDice() {
     render();
 }
 
- 
 function saveDice() {
     if (currentBet === 0) return;
     if (dice.die1.currentRoll === 0) return;

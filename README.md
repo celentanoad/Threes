@@ -22,18 +22,16 @@ Threes is a simple gambling dice game where the goal is to get the lowest score 
 - Roll the dice
 - Choose at least one die to "save" (Saved dice will not roll again)
 - Threes are worth zero points! Everything else is face value.
-- Once all 5 dice are saved, the score is totalled and the next player takes their turn
+- Once all 5 dice are saved, the score is totaled and the next player takes their turn
 - If a tie occurs, bets are doubled and the round starts again!
 - The game is officially over when one player runs out of money
   
 Click the link below to play!
-
 https://celentanoad.github.io/Threes/
 
 ## Future Improvements
 - Message displays score to beat on 2nd turn
 - Option to unsave dice before rolling again (maybe like an undo button?)
-- Add sounds
 - More than 2 players
 - Improve dice images
 - Add dice rolling animations
