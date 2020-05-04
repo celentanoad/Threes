@@ -42,6 +42,9 @@ Background Image by Atle Mo: https://www.toptal.com/designers/subtlepatterns/ret
 
 Sounds:
 http://soundbible.com/182-Shake-And-Roll-Dice.html
+
 https://freesound.org/people/jobro/sounds/180894/ by Jobro
+
 https://freesound.org/people/SpaceJoe/sounds/485717/ by SpaceJoe
+
 https://www.myinstants.com/instant/windows-31-startup-tada/
