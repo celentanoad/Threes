@@ -42,23 +42,14 @@ let players = [
 ]
 
 let currentBet;
-
 let betAmount;
-
 let winner;
-
 let roundWinner;
-
 let currentScore;
-
 let savedValues;
-
 let previousBet;
-
 let hasPlacedBet;
-
 let hasSavedDice;
-
 let previousWinner;
 
 /*------Cached Element References------*/
